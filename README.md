@@ -1,7 +1,9 @@
 # HOW TO START APPLICATION
 To start application, you need to: 
-- Copy the GitHub repo.
-- Build the docker containers (using docker compose build)
-- Launch container (docker compose up -d)
-- Fetch places (python manage.py fetch_places) in backend container
-And then you can test the project
+- Clone the GitHub repo.
+- Put the envs directory at the same level as the backend directory.
+- Build the docker containers (docker compose build).
+- Launch containers (docker compose up -d).
+- Use migrations in backend container (python manage.py migrate).
+- Fetch places in backend container (python manage.py fetch_places).
+And then you can test the project.
