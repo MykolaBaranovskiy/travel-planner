@@ -126,6 +126,29 @@ class TravelProjectViewSet(ListModelMixin, RetrieveModelMixin, UpdateModelMixin,
         return super().update(request, *args, **kwargs)
     
     @swagger_auto_schema(
+        operation_summary="Partially Update Travel Project",
+        operation_description="Partially update travel project",
+        responses={
+            200: TravelProjectSerializer,
+            401: "Unauthorized - Invalid or missing token",
+        },
+        request_body=TravelProjectCreateSerializer,
+        tags=["TravelProject"],
+        manual_parameters=[
+            openapi.Parameter(
+                "Authorization",
+                openapi.IN_HEADER,
+                description="JWT token with Bearer prefix (Bearer <token>)",
+                type=openapi.TYPE_STRING,
+                required=True,
+                example="Bearer your_jwt_token_here",
+            )
+        ],
+    )
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
+    
+    @swagger_auto_schema(
         operation_summary="Destroy Travel Project",
         operation_description="Destroy travel project",
         responses={
@@ -225,6 +248,29 @@ class TravelProjectPlaceViewSet(RetrieveModelMixin, UpdateModelMixin, GenericVie
     )
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
+    
+    @swagger_auto_schema(
+        operation_summary="Partially Update Travel Project Place",
+        operation_description="Partially update Travel Project Place",
+        responses={
+            200: TravelProjectPlaceSerializer,
+            401: "Unauthorized - Invalid or missing token",
+        },
+        request_body=TravelProjectPlaceSerializer,
+        tags=["TravelProject"],
+        manual_parameters=[
+            openapi.Parameter(
+                "Authorization",
+                openapi.IN_HEADER,
+                description="JWT token with Bearer prefix (Bearer <token>)",
+                type=openapi.TYPE_STRING,
+                required=True,
+                example="Bearer your_jwt_token_here",
+            )
+        ],
+    )
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
     
     def get_queryset(self):
         return TravelProjectPlace.objects.filter(project__user=self.request.user)

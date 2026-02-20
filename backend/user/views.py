@@ -24,16 +24,6 @@ class UserRegisterViewSet(CreateModelMixin, GenericViewSet):
         },
         request_body=UserRegisterSerializer,
         tags=["User"],
-        manual_parameters=[
-            openapi.Parameter(
-                "Authorization",
-                openapi.IN_HEADER,
-                description="JWT token with Bearer prefix (Bearer <token>)",
-                type=openapi.TYPE_STRING,
-                required=True,
-                example="Bearer your_jwt_token_here",
-            )
-        ],
     )
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
@@ -51,16 +41,6 @@ class UserLoginView(GenericAPIView):
         },
         request_body=UserLoginSerializer,
         tags=["User"],
-        manual_parameters=[
-            openapi.Parameter(
-                "Authorization",
-                openapi.IN_HEADER,
-                description="JWT token with Bearer prefix (Bearer <token>)",
-                type=openapi.TYPE_STRING,
-                required=True,
-                example="Bearer your_jwt_token_here",
-            )
-        ],
     )
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
@@ -78,7 +58,6 @@ class UserProfileView(GenericAPIView):
             200: UserProfileSerializer,
             401: "Unauthorized - Invalid or missing token",
         },
-        request_body=UserProfileSerializer,
         tags=["User"],
         manual_parameters=[
             openapi.Parameter(
