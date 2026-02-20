@@ -8,4 +8,5 @@ class ModelMixin(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        ordering = ["-created_at"]
         abstract = True
