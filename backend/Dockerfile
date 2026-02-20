@@ -18,6 +18,9 @@ RUN poetry install --no-root && \
 
 COPY . .
 
+RUN mkdir -p /app/logs \
+    && chown -R appuser:appuser /app/logs
+
 USER appuser
 
 EXPOSE 8000
