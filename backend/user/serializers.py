@@ -1,3 +1,5 @@
+import logging
+
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import authenticate
 from django.core.exceptions import ValidationError
@@ -5,6 +7,8 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import User
+
+LOGGER = logging.getLogger(__name__)
 
 class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,9 +21,11 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         last_name = attrs.get("last_name")
 
         if not first_name:
+            LOGGER.warning("First name was not specified")
             raise serializers.ValidationError("First name was not specified")
         
         if not last_name:
+            LOGGER.warning("Last name was not specified")
             raise serializers.ValidationError("Last name was not specified")
         
         return attrs
@@ -31,6 +37,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         try:
             validate_password(password=password, user=user)
         except ValidationError as error:
+            LOGGER.warning("Password didn't pass validation")
             raise serializers.ValidationError(error.messages)
         
         user.set_password(password)
@@ -63,6 +70,7 @@ class UserLoginSerializer(serializers.Serializer):
             user = None
 
         if not user:
+            LOGGER.warning("Invalid credentials")
             raise serializers.ValidationError("Invalid credentials")
         
         attrs["user"] = user
