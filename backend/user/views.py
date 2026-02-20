@@ -19,7 +19,7 @@ class UserRegisterViewSet(CreateModelMixin, GenericViewSet):
         operation_summary="Register User",
         operation_description="Register User",
         responses={
-            200: UserRegisterSerializer,
+            201: UserRegisterSerializer,
             401: "Unauthorized - Invalid or missing token",
         },
         request_body=UserRegisterSerializer,
